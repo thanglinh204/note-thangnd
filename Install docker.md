@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/0433bfd2-8144-49de-b929-f6635dbbf744)# Cài đặt Docker
+# Cài đặt Docker
 
 ## Bước 1: Cập nhật hệ thống
 <p>Trước khi cài Docker, hãy cập nhật các gói của hệ thống:</p>
