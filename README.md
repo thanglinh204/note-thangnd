@@ -14,6 +14,4 @@ Dưới đây là các lệnh để thêm một người dùng mới và cấp q
         <code id="code2">sudo usermod -aG sudo thangnd</code>
     </pre>
     <button onclick="copyCode('code2')">Copy</button>
-</div>
 
-</script>
