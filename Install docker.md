@@ -113,8 +113,6 @@ Bước 3: #Kiểm tra cài đặt Docker Compose
 5. Kiểm tra Docker Compose với một tệp docker-compose.yml mẫu
 #Bạn có thể tạo một file docker-compose.yml đơn giản để chạy thử Docker Compose:
 
-
-<div>
     <pre><code id="update">
 version: '3'
 services:
@@ -123,4 +121,3 @@ services:
     ports:
       - "8080:80"</code></pre>
     <button onclick="copyToClipboard('update')">Copy</button>
-</div>
