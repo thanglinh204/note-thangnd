@@ -1,12 +1,10 @@
+# Hướng dẫn thêm người dùng
 
-```markdown
-<h1> Hướng dẫn thêm người dùng
-
-<h2>Dưới đây là các lệnh để thêm một người dùng mới và cấp quyền `sudo` cho họ:
+## Dưới đây là các lệnh để thêm một người dùng mới và cấp quyền `sudo` cho họ:
 
 ```bash
-<h3> Thêm người dùng
+# Thêm người dùng
 sudo adduser thangnd
 
-<h3> Thêm quyền sudo
+# Thêm quyền sudo
 sudo usermod -aG sudo thangnd
