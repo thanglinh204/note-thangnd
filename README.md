@@ -6,5 +6,6 @@
 # Thêm người dùng
 sudo adduser thangnd
 
+```bash
 # Thêm quyền sudo
 sudo usermod -aG sudo thangnd
