@@ -1,11 +1,28 @@
 # Hướng dẫn thêm người dùng
 
-## Dưới đây là các lệnh để thêm một người dùng mới và cấp quyền `sudo` cho họ:
+Dưới đây là các lệnh để thêm một người dùng mới và cấp quyền `sudo` cho họ:
 
-```bash
-# Thêm người dùng
-sudo adduser thangnd
+<div>
+    <pre>
+        <code id="code1">sudo adduser thangnd</code>
+    </pre>
+    <button onclick="copyCode('code1')">Copy</button>
+</div>
 
-```bash
-# Thêm quyền sudo
-sudo usermod -aG sudo thangnd
+<div>
+    <pre>
+        <code id="code2">sudo usermod -aG sudo thangnd</code>
+    </pre>
+    <button onclick="copyCode('code2')">Copy</button>
+</div>
+
+<script>
+function copyCode(id) {
+    const code = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(code).then(() => {
+        alert('Copied to clipboard!');
+    }).catch(err => {
+        alert('Failed to copy: ' + err);
+    });
+}
+</script>
