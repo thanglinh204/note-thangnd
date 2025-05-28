@@ -14,3 +14,29 @@ CentOS 7 mặc định có Python 2.7. Để cài Python 3, bạn chạy lần l
 sudo yum update -y
 sudo yum install epel-release -y
 sudo yum install python36 python36-pip -y
+```
+
+##2. Chuẩn bị neu server NAT IP public
+Neu server ban dung IP private va NAT ra ngoai bang IP public, can them IP public vao loopback cua server truoc khi chay script:
+Thay 43.231.65.31 bang IP public tuong ung cua ban.
+
+3. Chay script cai dat Zimbra
+Tai file install_all_in_one.py (script gop toan bo cac buoc cai Zimbra).
+
+Chay script voi quyen root hoac sudo:
+
+```bash
+sudo python3 install_all_in_one.py
+```
+Script se hoi ban cac thong tin nhu:
+Domain (vi du: mail.example.com)
+
+IP Server (vi du: 192.168.1.10)
+
+Domain de tao DKIM
+
+Domain de xin va cai SSL
+
+Ban chi can nhap dung va theo doi tien trinh cai dat.
+
+Neu script bao loi, kiem tra lai thong bao loi, sua roi chay lai tu buoc bi loi.
