@@ -1,0 +1,21 @@
+---
+- name: Cài đặt dịch vụ trên ansible-test-01 & ansible-test-02
+  hosts: ansible-test
+  become: yes
+  tasks:
+    - name: Cập nhật hệ thống
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Cài đặt Nginx
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Khởi động Nginx và bật khởi động cùng hệ thống
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes

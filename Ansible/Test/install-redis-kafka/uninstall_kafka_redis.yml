@@ -1,0 +1,57 @@
+---
+- name: Gỡ cài đặt Kafka và Redis trên Ubuntu 22.04
+  hosts: ansible-test
+  become: yes
+  tasks:
+    # Gỡ cài đặt Redis
+    - name: Gỡ cài đặt Redis
+      apt:
+        name: redis-server
+        state: absent
+
+    - name: Xóa file cấu hình Redis
+      file:
+        path: /etc/redis/redis.conf
+        state: absent
+
+    - name: Xóa thư mục Redis
+      file:
+        path: /var/lib/redis
+        state: absent
+
+    # Gỡ cài đặt Kafka
+    - name: Dừng Kafka nếu đang chạy
+      systemd:
+        name: kafka
+        state: stopped
+      ignore_errors: yes
+
+    - name: Tắt Kafka khỏi hệ thống
+      systemd:
+        name: kafka
+        enabled: no
+      ignore_errors: yes
+
+    - name: Xóa service Kafka
+      file:
+        path: /etc/systemd/system/kafka.service
+        state: absent
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Xóa thư mục cài đặt Kafka
+      file:
+        path: /opt/kafka
+        state: absent
+
+    - name: Xóa thư mục logs Kafka
+      file:
+        path: /var/lib/kafka-logs
+        state: absent
+
+    - name: Xóa tệp tin Kafka tải xuống
+      file:
+        path: /tmp/kafka.tgz
+        state: absent

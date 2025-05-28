@@ -1,0 +1,165 @@
+---
+- name: Cài đặt Kafka, Zookeeper và Redis trên Ubuntu 22.04
+  hosts: ansible-test
+  become: yes
+  vars:
+    kafka_version: "3.6.0"
+    scala_version: "2.13"
+    kafka_install_dir: "/opt/kafka"
+    redis_version: "7.2.3"
+    zookeeper_dir: "/opt/zookeeper"
+  tasks:
+    # Cập nhật hệ thống
+    - name: Cập nhật hệ thống Ubuntu
+      apt:
+        update_cache: yes
+
+    # Cài đặt Java (Kafka & Zookeeper cần Java)
+    - name: Cài đặt OpenJDK 11
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    # Cài đặt Redis
+    - name: Cài đặt Redis trên Ubuntu 22.04
+      apt:
+        name: redis-server
+        state: present
+
+    - name: Bật Redis khởi động cùng hệ thống
+      systemd:
+        name: redis-server
+        state: started
+        enabled: yes
+
+    # Cài đặt Zookeeper
+    - name: Tạo thư mục cài đặt Zookeeper
+      file:
+        path: "{{ zookeeper_dir }}"
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0755'
+
+    - name: Tải Zookeeper về server
+      get_url:
+        url: "https://downloads.apache.org/zookeeper/stable/apache-zookeeper-3.8.3-bin.tar.gz"
+        dest: "/tmp/zookeeper.tgz"
+
+    - name: Giải nén Zookeeper vào thư mục đích
+      unarchive:
+        src: "/tmp/zookeeper.tgz"
+        dest: "{{ zookeeper_dir }}"
+        remote_src: yes
+        extra_opts:
+          - --strip-components=1
+
+    - name: Tạo thư mục dữ liệu cho Zookeeper
+      file:
+        path: "{{ zookeeper_dir }}/data"
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0755'
+
+    - name: Cấu hình Zookeeper (zoo.cfg)
+      copy:
+        dest: "{{ zookeeper_dir }}/conf/zoo.cfg"
+        content: |
+          tickTime=2000
+          dataDir={{ zookeeper_dir }}/data
+          clientPort=2181
+          maxClientCnxns=60
+
+    - name: Tạo file service cho Zookeeper
+      copy:
+        dest: /etc/systemd/system/zookeeper.service
+        content: |
+          [Unit]
+          Description=Apache Zookeeper
+          After=network.target
+
+          [Service]
+          User=ansible
+          ExecStart={{ zookeeper_dir }}/bin/zkServer.sh start-foreground
+          ExecStop={{ zookeeper_dir }}/bin/zkServer.sh stop
+          Restart=always
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Khởi động Zookeeper và bật khởi động cùng hệ thống
+      systemd:
+        name: zookeeper
+        state: started
+        enabled: yes
+
+    # Cài đặt Kafka
+    - name: Tạo thư mục cài đặt Kafka
+      file:
+        path: "{{ kafka_install_dir }}"
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0755'
+
+    - name: Tải Kafka về server
+      get_url:
+        url: "https://downloads.apache.org/kafka/{{ kafka_version }}/kafka_{{ scala_version }}-{{ kafka_version }}.tgz"
+        dest: "/tmp/kafka.tgz"
+
+    - name: Giải nén Kafka vào thư mục đích
+      unarchive:
+        src: "/tmp/kafka.tgz"
+        dest: "{{ kafka_install_dir }}"
+        remote_src: yes
+        extra_opts:
+          - --strip-components=1
+
+    - name: Tạo thư mục logs cho Kafka
+      file:
+        path: /var/lib/kafka-logs
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0755'
+
+    - name: Cấu hình Kafka (server.properties)
+      copy:
+        dest: "{{ kafka_install_dir }}/config/server.properties"
+        content: |
+          broker.id=0
+          listeners=PLAINTEXT://:9092
+          log.dirs=/var/lib/kafka-logs
+          zookeeper.connect=localhost:2181
+
+    - name: Tạo file service cho Kafka
+      copy:
+        dest: /etc/systemd/system/kafka.service
+        content: |
+          [Unit]
+          Description=Apache Kafka
+          After=network.target zookeeper.service
+
+          [Service]
+          User=ansible
+          ExecStart={{ kafka_install_dir }}/bin/kafka-server-start.sh {{ kafka_install_dir }}/config/server.properties
+          ExecStop={{ kafka_install_dir }}/bin/kafka-server-stop.sh
+          Restart=always
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Khởi động Kafka và bật khởi động cùng hệ thống
+      systemd:
+        name: kafka
+        state: started
+        enabled: yes
