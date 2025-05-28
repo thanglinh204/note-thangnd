@@ -18,8 +18,14 @@ sudo yum install python36 python36-pip -y
 
 ## 2. Chuẩn bị neu server NAT IP public
 Neu server ban dung IP private va NAT ra ngoai bang IP public, can them IP public vao loopback cua server truoc khi chay script:
+
 Thay 43.231.65.31 bang IP public tuong ung cua ban.
 
+Thêm IP public vào loopback:
+
+```
+ip addr add <IP_PUBLIC>/32 dev lo
+```
 ## 3. Chay script cai dat Zimbra
 Tai file install_all_in_one.py (script gop toan bo cac buoc cai Zimbra).
 
