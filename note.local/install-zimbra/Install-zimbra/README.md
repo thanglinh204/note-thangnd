@@ -26,6 +26,8 @@ Thêm IP public vào loopback:
 ```
 ip addr add <IP_PUBLIC>/32 dev lo
 ```
+![image](https://github.com/user-attachments/assets/d815dbe0-b078-4b13-8989-a1f586fa8ab9)
+
 ## 3. Chay script cai dat Zimbra
 Tai file install_all_in_one.py (script gop toan bo cac buoc cai Zimbra).
 
