@@ -53,6 +53,19 @@ IP Server (vi du: 192.168.1.10)
 
 ![image](https://github.com/user-attachments/assets/202f02ea-e6d4-4e1e-aa4a-45909c103b24)
 
+Chọn 7 sau đó chon 4 để SET pass user "admin'
+
+![image](https://github.com/user-attachments/assets/dd2bc69c-9325-4531-bbef-ff452b6a48f3)
+
+![image](https://github.com/user-attachments/assets/4ff35b26-ca5d-4d2f-bc20-1b5d66e04c8f)
+
+![image](https://github.com/user-attachments/assets/fb88e2c9-7852-4d4b-a28c-687996eebf7a)
+
+![image](https://github.com/user-attachments/assets/1b41821c-454f-46a4-91ad-c95a2bde7dc4)
+
+![image](https://github.com/user-attachments/assets/07ee0211-1662-4fc9-82cf-3e662cdd227f)
+
+
 
 Domain de tao DKIM
 
