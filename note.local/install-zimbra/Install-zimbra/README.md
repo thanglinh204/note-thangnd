@@ -15,6 +15,16 @@ sudo yum update -y
 sudo yum install epel-release -y
 sudo yum install python36 python36-pip -y
 ```
+# 1.1 Thiết lập bản ghi DNS ban đầu
+
+Đầu tiên để chuẩn bị cấu hình, cài đặt cần phải tạo các bản ghi cho tên miền. Truy cập vào trang quản lý tên miền của các nhà cung cấp và tạo các bản ghi như dưới đây.
+
+```bash
+mail	A	43.231.65.31 
+autodiscover	CNAME	clouddata.vn 
+autoconfig	CNAME	mail.clouddata.vn 
+@	MX	mail.clouddata.vn 10
+```
 
 ## 2. Chuẩn bị neu server NAT IP public
 Neu server ban dung IP private va NAT ra ngoai bang IP public, can them IP public vao loopback cua server truoc khi chay script:
