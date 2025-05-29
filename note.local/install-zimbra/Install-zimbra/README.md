@@ -41,6 +41,9 @@ Domain (vi du: mail.example.com)
 
 IP Server (vi du: 192.168.1.10)
 
+![image](https://github.com/user-attachments/assets/202f02ea-e6d4-4e1e-aa4a-45909c103b24)
+
+
 Domain de tao DKIM
 
 Domain de xin va cai SSL
