@@ -40,7 +40,7 @@ Kiểm tra quyền sudo:
 
 ```bash
 
-su - ten_user
+su - kayle
 ```
 Kiểm tra quyền bằng lệnh:
 
